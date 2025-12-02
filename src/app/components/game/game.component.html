@@ -129,28 +129,51 @@
       
       <!-- Stats Card -->
       <div class="stats-card glass">
-        <h3>Your Stats</h3>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <span class="stat-number">{{ stats().bestScore }}</span>
-            <span class="stat-name">Best Score</span>
+        <h3>Your Stats 
+          @if (loading()) {
+            <span class="loading-indicator">●</span>
+          }
+        </h3>
+        @if (loading() && stats().totalAttempts === 0) {
+          <div class="loading-state">
+            <span class="spinner-small"></span>
+            <p>Loading your stats...</p>
           </div>
-          <div class="stat-item">
-            <span class="stat-number">{{ stats().averageScore }}</span>
-            <span class="stat-name">Average</span>
+        } @else {
+          <div class="stats-grid stats-grid-two">
+            <div class="stat-item">
+              <span class="stat-number">{{ stats().bestScore }}</span>
+              <span class="stat-name">Best Score</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">{{ stats().totalAttempts }}</span>
+              <span class="stat-name">Total Plays</span>
+            </div>
           </div>
-          <div class="stat-item">
-            <span class="stat-number">{{ stats().totalAttempts }}</span>
-            <span class="stat-name">Total Plays</span>
-          </div>
-        </div>
+          @if (stats().totalAttempts === 0) {
+            <p class="first-game-hint">🎮 Play your first game to see stats!</p>
+          }
+        }
       </div>
       
       <!-- History Card -->
       <div class="history-card glass">
-        <h3>Recent Attempts</h3>
-        @if (stats().recentAttempts.length === 0) {
-          <p class="empty-state">No attempts yet. Start playing!</p>
+        <h3>Recent Attempts 
+          @if (stats().recentAttempts.length > 0) {
+            <span class="count-badge">{{ stats().recentAttempts.length }}</span>
+          }
+        </h3>
+        @if (loading() && stats().recentAttempts.length === 0) {
+          <div class="loading-state">
+            <span class="spinner-small"></span>
+            <p>Loading history...</p>
+          </div>
+        } @else if (stats().recentAttempts.length === 0) {
+          <div class="empty-state">
+            <div class="empty-icon">🎯</div>
+            <p>No attempts yet</p>
+            <p class="empty-hint">Your last 10 games will appear here!</p>
+          </div>
         } @else {
           <div class="history-list">
             @for (attempt of stats().recentAttempts; track attempt.id; let i = $index) {
