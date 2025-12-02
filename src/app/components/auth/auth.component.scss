@@ -32,6 +32,7 @@
     top: -10%;
     right: -5%;
     animation: float 8s ease-in-out infinite;
+    opacity: 0.3;
   }
   
   .orb-2 {
@@ -41,6 +42,7 @@
     bottom: -5%;
     left: -5%;
     animation: float 10s ease-in-out infinite reverse;
+    opacity: 0.25;
   }
   
   .orb-3 {
@@ -50,6 +52,7 @@
     top: 50%;
     left: 20%;
     animation: float 12s ease-in-out infinite;
+    opacity: 0.2;
   }
 }
 
@@ -69,6 +72,12 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
+  
+  .auth-logo-image {
+    height: 120px;
+    width: auto;
+    filter: drop-shadow(0 4px 20px rgba(209, 66, 66, 0.5));
+  }
 }
 
 .logo-icon {
@@ -83,9 +92,9 @@
     transform: translateX(-50%);
     width: 20px;
     height: 20px;
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    background: linear-gradient(135deg, #f5e6d3, #e8d5bf);
     border-radius: 50%;
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+    box-shadow: 0 0 20px rgba(245, 230, 211, 0.6);
     animation: bounce 1.5s ease-in-out infinite;
   }
   

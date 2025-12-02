@@ -25,12 +25,18 @@
   align-items: center;
   gap: var(--space-sm);
   
+  .logo-image {
+    height: 40px;
+    width: auto;
+    filter: drop-shadow(0 2px 8px rgba(209, 66, 66, 0.4));
+  }
+  
   .ball-mini {
     width: 16px;
     height: 16px;
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    background: linear-gradient(135deg, #d14242, #e85d5d);
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 10px rgba(209, 66, 66, 0.5);
   }
   
   .logo-text {
@@ -122,8 +128,8 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   background: 
-    radial-gradient(ellipse at 50% 0%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-    linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+    radial-gradient(ellipse at 50% 0%, rgba(209, 66, 66, 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(42, 21, 21, 0.9) 0%, rgba(26, 15, 15, 0.95) 100%);
   
   // Grid pattern
   &::before {
@@ -165,11 +171,11 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  background: linear-gradient(135deg, #f5e6d3 0%, #e8d5bf 50%, #d4bcab 100%);
   box-shadow: 
     inset -3px -3px 8px rgba(0, 0, 0, 0.3),
-    inset 3px 3px 8px rgba(255, 255, 255, 0.3),
-    0 0 20px rgba(245, 158, 11, 0.6),
+    inset 3px 3px 8px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(245, 230, 211, 0.6),
     0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
@@ -185,10 +191,10 @@
 
 @keyframes ball-glow {
   0%, 100% {
-    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6));
+    filter: drop-shadow(0 0 8px rgba(245, 230, 211, 0.6));
   }
   50% {
-    filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.9));
+    filter: drop-shadow(0 0 15px rgba(245, 230, 211, 0.9));
   }
 }
 
@@ -327,28 +333,28 @@
   }
   
   &.score-perfect {
-    border: 2px solid #10b981;
-    .score-label, .score-value { color: #10b981; }
+    border: 2px solid #4caf50;
+    .score-label, .score-value { color: #4caf50; }
   }
   
   &.score-great {
-    border: 2px solid #06b6d4;
-    .score-label, .score-value { color: #06b6d4; }
+    border: 2px solid #e85d5d;
+    .score-label, .score-value { color: #e85d5d; }
   }
   
   &.score-good {
-    border: 2px solid #f59e0b;
-    .score-label, .score-value { color: #f59e0b; }
+    border: 2px solid #f5a67a;
+    .score-label, .score-value { color: #f5a67a; }
   }
   
   &.score-ok {
-    border: 2px solid #94a3b8;
-    .score-label, .score-value { color: #94a3b8; }
+    border: 2px solid #d4bcab;
+    .score-label, .score-value { color: #d4bcab; }
   }
   
   &.score-miss {
-    border: 2px solid #ef4444;
-    .score-label, .score-value { color: #ef4444; }
+    border: 2px solid #d14242;
+    .score-label, .score-value { color: #d14242; }
   }
 }
 
@@ -403,23 +409,23 @@
 }
 
 .btn-drop {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-  box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, #d14242 0%, #c93a3a 100%);
+  color: var(--color-text-primary);
+  box-shadow: 0 0 30px rgba(209, 66, 66, 0.5);
   animation: pulse-drop 0.5s ease-in-out infinite;
   
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(239, 68, 68, 0.7);
+    box-shadow: 0 0 40px rgba(209, 66, 66, 0.7);
   }
 }
 
 @keyframes pulse-drop {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 20px rgba(209, 66, 66, 0.5);
   }
   50% {
-    box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
+    box-shadow: 0 0 35px rgba(209, 66, 66, 0.8);
   }
 }
 
@@ -633,11 +639,11 @@
     font-family: var(--font-mono);
     min-width: 50px;
     
-    &.score-perfect { color: #10b981; }
-    &.score-great { color: #06b6d4; }
-    &.score-good { color: #f59e0b; }
-    &.score-ok { color: #94a3b8; }
-    &.score-miss { color: #ef4444; }
+    &.score-perfect { color: #4caf50; }
+    &.score-great { color: #e85d5d; }
+    &.score-good { color: #f5a67a; }
+    &.score-ok { color: #d4bcab; }
+    &.score-miss { color: #d14242; }
   }
   
   .history-info {

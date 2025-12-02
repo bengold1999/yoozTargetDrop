@@ -1,26 +1,26 @@
 // === CSS Variables ===
 :root {
-  // Colors - Deep ocean/arcade theme
-  --color-bg-primary: #0a0e17;
-  --color-bg-secondary: #111827;
-  --color-bg-tertiary: #1e293b;
-  --color-bg-card: rgba(30, 41, 59, 0.7);
+  // Colors - Vintage Arcade/Red theme inspired by logo
+  --color-bg-primary: #1a0f0f;
+  --color-bg-secondary: #2a1515;
+  --color-bg-tertiary: #3d2020;
+  --color-bg-card: rgba(42, 21, 21, 0.85);
   
-  --color-accent-primary: #06b6d4;
-  --color-accent-secondary: #8b5cf6;
-  --color-accent-tertiary: #f59e0b;
-  --color-accent-success: #10b981;
-  --color-accent-danger: #ef4444;
+  --color-accent-primary: #d14242;
+  --color-accent-secondary: #e85d5d;
+  --color-accent-tertiary: #f5e6d3;
+  --color-accent-success: #4caf50;
+  --color-accent-danger: #d14242;
   
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
+  --color-text-primary: #f5e6d3;
+  --color-text-secondary: #d4bcab;
+  --color-text-muted: #8a6f5e;
   
   // Gradients
-  --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-  --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-  --gradient-bg: radial-gradient(ellipse at top, #1e293b 0%, #0a0e17 50%, #000 100%);
-  --gradient-glow: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+  --gradient-primary: linear-gradient(135deg, #d14242 0%, #e85d5d 100%);
+  --gradient-secondary: linear-gradient(135deg, #e85d5d 0%, #f5a67a 100%);
+  --gradient-bg: radial-gradient(ellipse at top, #3d2020 0%, #1a0f0f 50%, #0a0505 100%);
+  --gradient-glow: radial-gradient(circle, rgba(209, 66, 66, 0.15) 0%, transparent 70%);
   
   // Typography
   --font-primary: 'Outfit', system-ui, sans-serif;
@@ -45,8 +45,8 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
-  --shadow-glow-cyan: 0 0 30px rgba(6, 182, 212, 0.4);
-  --shadow-glow-purple: 0 0 30px rgba(139, 92, 246, 0.4);
+  --shadow-glow-red: 0 0 30px rgba(209, 66, 66, 0.4);
+  --shadow-glow-cream: 0 0 30px rgba(245, 230, 211, 0.2);
   
   // Transitions
   --transition-fast: 150ms ease;
@@ -125,12 +125,12 @@ h4 { font-size: 1.25rem; }
 
 .btn-primary {
   background: var(--gradient-primary);
-  color: white;
-  box-shadow: var(--shadow-md), var(--shadow-glow-cyan);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-md), var(--shadow-glow-red);
   
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg), 0 0 40px rgba(6, 182, 212, 0.6);
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(209, 66, 66, 0.6);
   }
   
   &:active:not(:disabled) {
@@ -236,10 +236,10 @@ h4 { font-size: 1.25rem; }
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+    box-shadow: 0 0 20px rgba(209, 66, 66, 0.4);
   }
   50% {
-    box-shadow: 0 0 40px rgba(6, 182, 212, 0.8);
+    box-shadow: 0 0 40px rgba(209, 66, 66, 0.8);
   }
 }
 
