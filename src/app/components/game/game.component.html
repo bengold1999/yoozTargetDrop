@@ -1,0 +1,174 @@
+<div class="game-page">
+  <!-- Header -->
+  <header class="game-header glass">
+    <div class="header-left">
+      <div class="logo-mini">
+        <span class="ball-mini"></span>
+        <span class="logo-text">Drop Target</span>
+      </div>
+    </div>
+    <div class="header-center">
+      <div class="stat-badge">
+        <span class="stat-icon">🏆</span>
+        <div class="stat-content">
+          <span class="stat-label">Best</span>
+          <span class="stat-value">{{ stats().bestScore }}</span>
+        </div>
+      </div>
+      <div class="stat-badge">
+        <span class="stat-icon">🎯</span>
+        <div class="stat-content">
+          <span class="stat-label">Plays</span>
+          <span class="stat-value">{{ stats().totalAttempts }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="user-name">{{ userEmail() }}</span>
+      <button class="btn btn-secondary btn-small" (click)="logout()">
+        Sign Out
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="game-content">
+    <!-- Game Area -->
+    <div class="game-area-container">
+      <div class="game-area glass" #gameArea>
+        <!-- Ball -->
+        <div 
+          class="ball"
+          [class.moving]="gameState() === 'moving'"
+          [class.falling]="gameState() === 'falling'"
+          [style.left.px]="ballPosition().x"
+          [style.top.px]="ballPosition().y"
+        >
+          <div class="ball-inner"></div>
+          <div class="ball-shine"></div>
+        </div>
+        
+        <!-- Target -->
+        <div 
+          class="target"
+          [style.left.px]="targetPosition().x"
+          [style.top.px]="targetPosition().y"
+        >
+          <div class="target-ring ring-1"></div>
+          <div class="target-ring ring-2"></div>
+          <div class="target-ring ring-3"></div>
+          <div class="target-center"></div>
+        </div>
+        
+        <!-- Ground line -->
+        <div class="ground-line"></div>
+        
+        <!-- Score Popup -->
+        @if (showScoreAnimation() && lastScore() !== null) {
+          <div class="score-popup" [class]="getScoreClass(lastScore()!)">
+            <span class="score-label">{{ getScoreLabel(lastScore()!) }}</span>
+            <span class="score-value">{{ lastScore() }}</span>
+            @if (isNewBest()) {
+              <span class="new-best-badge">NEW BEST!</span>
+            }
+          </div>
+        }
+        
+        <!-- Game instructions -->
+        @if (gameState() === 'ready') {
+          <div class="game-instructions">
+            <p>Press <strong>START</strong> to begin</p>
+            <p class="sub">Then <strong>DROP</strong> the ball at the right moment!</p>
+          </div>
+        }
+      </div>
+      
+      <!-- Game Controls -->
+      <div class="game-controls">
+        @switch (gameState()) {
+          @case ('ready') {
+            <button class="btn btn-primary btn-large game-btn" (click)="startGame()">
+              <span class="btn-icon">▶</span>
+              START
+            </button>
+          }
+          @case ('moving') {
+            <button class="btn btn-drop btn-large game-btn" (click)="dropBall()">
+              <span class="btn-icon">⬇</span>
+              DROP!
+            </button>
+          }
+          @case ('falling') {
+            <button class="btn btn-secondary btn-large game-btn" disabled>
+              <span class="spinner"></span>
+              Falling...
+            </button>
+          }
+          @case ('landed') {
+            <button class="btn btn-primary btn-large game-btn" (click)="resetGame()">
+              <span class="btn-icon">🔄</span>
+              PLAY AGAIN
+            </button>
+          }
+        }
+      </div>
+    </div>
+    
+    <!-- Side Panel - Stats & History -->
+    <div class="side-panel">
+      <!-- Current Score Card -->
+      @if (lastScore() !== null) {
+        <div class="score-card glass animate-fade-in">
+          <h3>Last Score</h3>
+          <div class="big-score" [class]="getScoreClass(lastScore()!)">
+            {{ lastScore() }}
+          </div>
+          <span class="score-label-small">{{ getScoreLabel(lastScore()!) }}</span>
+        </div>
+      }
+      
+      <!-- Stats Card -->
+      <div class="stats-card glass">
+        <h3>Your Stats</h3>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">{{ stats().bestScore }}</span>
+            <span class="stat-name">Best Score</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ stats().averageScore }}</span>
+            <span class="stat-name">Average</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ stats().totalAttempts }}</span>
+            <span class="stat-name">Total Plays</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- History Card -->
+      <div class="history-card glass">
+        <h3>Recent Attempts</h3>
+        @if (stats().recentAttempts.length === 0) {
+          <p class="empty-state">No attempts yet. Start playing!</p>
+        } @else {
+          <div class="history-list">
+            @for (attempt of stats().recentAttempts; track attempt.id; let i = $index) {
+              <div class="history-item" [style.animation-delay.ms]="i * 50">
+                <div class="history-score" [class]="getScoreClass(attempt.score)">
+                  {{ attempt.score }}
+                </div>
+                <div class="history-info">
+                  <span class="history-label">{{ getScoreLabel(attempt.score) }}</span>
+                  <span class="history-date">{{ formatDate(attempt.timestamp) }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+
