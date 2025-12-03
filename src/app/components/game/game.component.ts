@@ -70,7 +70,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     // This bypasses any signal conversion delays and catches auth state immediately
     user(this.auth).pipe(
       takeUntilDestroyed(this.destroyRef),
-      filter(currentUser => !!currentUser) // Only proceed when user exists
+      filter((currentUser): currentUser is NonNullable<typeof currentUser> => !!currentUser) // Type guard
     ).subscribe(currentUser => {
       console.log('🔥 Firebase Auth: User detected ->', currentUser.email);
       console.log('📊 Loading user stats immediately...');
