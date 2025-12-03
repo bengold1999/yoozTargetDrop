@@ -41,7 +41,6 @@ The task was designed to evaluate proficiency in:
   - User ID (UID)
   - Score (calculated based on accuracy)
   - Timestamp (date and time of attempt)
-  - Additional metadata (distance from target)
 - ✅ Retrieval and display of user's game history
 - ✅ Calculation of statistics (best score, average, total games played)
 
@@ -204,7 +203,6 @@ Edit CSS variables in `styles.scss`:
   id: string;           // Auto-generated
   userId: string;       // Firebase Auth UID
   score: number;        // 0-1000
-  distance: number;     // Pixels from target center
   timestamp: Timestamp; // When the attempt was made
 }
 ```
