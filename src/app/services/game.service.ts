@@ -238,12 +238,17 @@ export class GameService {
   }
 
   calculateScore(distance: number, maxDistance: number): number {
-    // More forgiving scoring algorithm
-    // Perfect hit (distance = 0) gives 1000 points
+    // Scoring based on horizontal distance from target center
+    // Perfect zone (within 10px) gives exactly 1000 points
     // Within target radius gives high scores
-    // Uses exponential decay for more forgiving scoring
+    // Uses exponential decay for forgiving scoring
     
     if (distance >= maxDistance) return 0;
+    
+    // Perfect zone - if within 10 pixels of center, give 1000
+    if (distance <= 10) {
+      return 1000;
+    }
     
     // Target radius is 40px (half of 80px target size)
     const targetRadius = 40;
@@ -251,10 +256,10 @@ export class GameService {
     // If ball center is within target radius, give very high scores
     if (distance <= targetRadius) {
       // Use exponential curve for smoother scoring within target
-      const normalizedDistance = distance / targetRadius;
-      // This gives ~1000 for center, ~850-950 for most of inner target
-      const score = Math.round(1000 * Math.pow(1 - normalizedDistance, 0.5));
-      return Math.max(850, score); // Ensure minimum 850 if within target
+      const normalizedDistance = (distance - 10) / (targetRadius - 10);
+      // This gives ~950-999 for close to center, ~850 for edge of target
+      const score = Math.round(940 * Math.pow(1 - normalizedDistance, 0.5) + 60);
+      return Math.max(850, Math.min(999, score));
     }
     
     // Outside target: linear decay to 0

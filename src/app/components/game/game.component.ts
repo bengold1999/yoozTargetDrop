@@ -88,7 +88,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
       // Set target position at bottom center
       this.targetPosition.set({
         x: (this.gameWidth - this.TARGET_SIZE) / 2,
-        y: this.gameHeight - this.TARGET_SIZE - 20
+        y: this.gameHeight - this.TARGET_SIZE - 5
       });
     }
   }
@@ -150,7 +150,9 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     const newY = pos.y + this.velocity;
     
     // Check if ball has landed
-    const landingY = this.gameHeight - this.BALL_SIZE - 20;
+    // Position ball so its center aligns with target center
+    const targetCenterY = this.gameHeight - this.TARGET_SIZE - 5 + (this.TARGET_SIZE / 2);
+    const landingY = targetCenterY - (this.BALL_SIZE / 2);
     
     if (newY >= landingY) {
       this.ballPosition.set({ ...pos, y: landingY });
@@ -210,18 +212,18 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getScoreClass(score: number): string {
-    if (score >= 900) return 'score-perfect';
-    if (score >= 700) return 'score-great';
-    if (score >= 500) return 'score-good';
-    if (score >= 300) return 'score-ok';
+    if (score >= 995) return 'score-perfect';
+    if (score >= 900) return 'score-great';
+    if (score >= 750) return 'score-good';
+    if (score >= 500) return 'score-ok';
     return 'score-miss';
   }
 
   getScoreLabel(score: number): string {
-    if (score >= 900) return 'PERFECT!';
-    if (score >= 700) return 'GREAT!';
-    if (score >= 500) return 'GOOD!';
-    if (score >= 300) return 'OK';
+    if (score >= 995) return 'PERFECT!';
+    if (score >= 900) return 'GREAT!';
+    if (score >= 750) return 'GOOD!';
+    if (score >= 500) return 'OK';
     return 'MISS';
   }
 
