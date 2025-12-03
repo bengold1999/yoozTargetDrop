@@ -19,7 +19,6 @@ export interface GameAttempt {
   id?: string;
   userId: string;
   score: number;
-  distance: number;
   timestamp: Date;
 }
 
@@ -55,21 +54,20 @@ export class GameService {
   
   currentScore = signal<number | null>(null);
 
-  async saveAttempt(score: number, distance: number): Promise<void> {
+  async saveAttempt(score: number): Promise<void> {
     const user = this.authService.currentUser();
     if (!user) {
       console.error('❌ Cannot save attempt: user not authenticated');
       return;
     }
 
-    console.log('💾 Saving attempt - Score:', score, 'Distance:', distance);
+    console.log('💾 Saving attempt - Score:', score);
     this.loading.set(true);
     
     try {
       const attempt: Omit<GameAttempt, 'id'> = {
         userId: user.uid,
         score,
-        distance,
         timestamp: new Date()
       };
 
@@ -191,7 +189,6 @@ export class GameService {
           id: doc.id,
           userId: doc.data()['userId'],
           score: doc.data()['score'],
-          distance: doc.data()['distance'],
           timestamp: (doc.data()['timestamp'] as Timestamp).toDate()
         }));
         console.log('✅ Found', recentAttempts.length, 'recent attempts');
@@ -208,7 +205,6 @@ export class GameService {
             id: doc.id,
             userId: doc.data()['userId'],
             score: doc.data()['score'],
-            distance: doc.data()['distance'],
             timestamp: (doc.data()['timestamp'] as Timestamp).toDate()
           }))
           .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())

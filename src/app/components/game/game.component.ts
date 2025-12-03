@@ -217,7 +217,7 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showScoreAnimation.set(true);
     
     // Save attempt to Firestore
-    await this.gameService.saveAttempt(score, distance);
+    await this.gameService.saveAttempt(score);
   }
 
   resetGame(): void {
