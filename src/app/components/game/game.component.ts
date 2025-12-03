@@ -1,8 +1,11 @@
-import { Component, inject, signal, computed, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, effect, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Auth, user } from '@angular/fire/auth';
 import { AuthService } from '../../services/auth.service';
 import { GameService, GameAttempt } from '../../services/game.service';
+import { filter } from 'rxjs';
 
 type GameState = 'ready' | 'moving' | 'falling' | 'landed';
 
@@ -21,9 +24,11 @@ interface BallPosition {
 export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('gameArea') gameAreaRef!: ElementRef<HTMLDivElement>;
   
+  private auth = inject(Auth);
   private authService = inject(AuthService);
   private gameService = inject(GameService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
   
   // Game constants
   private readonly BALL_SIZE = 30;
@@ -60,8 +65,31 @@ export class GameComponent implements OnInit, OnDestroy, AfterViewInit {
     return user?.email?.split('@')[0] || 'Player';
   });
 
+  constructor() {
+    // Subscribe directly to Firebase auth observable for immediate updates
+    // This bypasses any signal conversion delays and catches auth state immediately
+    user(this.auth).pipe(
+      takeUntilDestroyed(this.destroyRef),
+      filter(currentUser => !!currentUser) // Only proceed when user exists
+    ).subscribe(currentUser => {
+      console.log('🔥 Firebase Auth: User detected ->', currentUser.email);
+      console.log('📊 Loading user stats immediately...');
+      this.gameService.loadUserStats();
+    });
+
+    // Also use effect as backup for signal-based updates
+    effect(() => {
+      const currentUser = this.currentUser();
+      if (currentUser) {
+        console.log('✨ Effect: User signal updated ->', currentUser.email);
+      }
+    });
+  }
+
   ngOnInit(): void {
-    this.gameService.loadUserStats();
+    // The constructor's Firebase observable subscription handles stats loading
+    // This ensures immediate response to auth state, whether fresh login or page refresh
+    console.log('🎯 GameComponent initialized');
   }
 
   ngAfterViewInit(): void {
